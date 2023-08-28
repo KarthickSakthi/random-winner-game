@@ -1,6 +1,6 @@
 //SPDX-License-Identifier:MIT
 pragma solidity  ^0.8.18;
-import "@openzeppelin/contracts/access/ownable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
 
 contract RandomWinnerGame is VRFConsumerBase, Ownable{
@@ -12,7 +12,7 @@ bytes32 public keyHash;
 //Address of the players
 address[] public players;
 //Max number of players in one game
-uint8 maxplayers;
+uint8 maxPlayers;
 //Variable to indicate if the game has started or not
 bool public gameStarted;
 // the fees for entering the game
@@ -45,7 +45,7 @@ constructor inherits a VRFConsumerBase and initiates the value for keyHash, fee 
 startGame starts the game by setting appropriate values for all the variables
 */ 
 
-function startGame(uint _maxPlayers, uint256 _entryFee)public onlyOwner{
+function startGame(uint8 _maxPlayers, uint256 _entryFee)public onlyOwner{
     //Check if there is a game already running
     require(!gameStarted , "Game is currently running");
     //check if _maxPlayers greater than 0
@@ -55,6 +55,7 @@ function startGame(uint _maxPlayers, uint256 _entryFee)public onlyOwner{
     // set the max players for this game
     maxPlayers = _maxPlayers;
     //setup entry fee for the game
+    gameStarted=true;
     entryFee = _entryFee;
     gameId+=1;
     emit GameStarted(gameId, maxPlayers, entryFee);
